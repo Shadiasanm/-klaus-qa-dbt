@@ -8,6 +8,7 @@ pipeline to extract, transform, and load subscription and customer data to BigQu
 - **Transform**: Cleans and transforms the data into separate subscription and customer tables
 - **Load**: Incremental load to BigQuery with separate tables
 - **Incremental**: Only loads new data without reprocessing everything
+- **Offset Handling**: Uses pagination tokens for true incremental processing
 
 ## 📁 Files
 
