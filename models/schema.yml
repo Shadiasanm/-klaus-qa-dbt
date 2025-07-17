@@ -1,0 +1,98 @@
+version: 2
+
+models:
+  - name: conversation
+    description: "Customer support ticket or conversation."
+    columns:
+      - name: id
+        description: "Primary key."
+        tests: [unique, not_null]
+      - name: payment_id
+        description: "FK to payment."
+      - name: payment_token_id
+        description: "FK to payment_token."
+      - name: assignee_id
+        description: "FK to user."
+      - name: most_active_internal_user_id
+        description: "FK to user."
+
+  - name: autoqa_review
+    description: "Automated review for a conversation."
+    columns:
+      - name: autoqa_review_id
+        description: "Primary key."
+        tests: [unique, not_null]
+      - name: payment_id
+        description: "FK to payment."
+      - name: payment_token_id
+        description: "FK to payment_token."
+      - name: external_ticket_id
+        description: "FK to conversation."
+      - name: team_id
+        description: "FK to team."
+      - name: reviewee_internal_id
+        description: "FK to user."
+
+  - name: autoqa_rating
+    description: "Category-level score within an automated review."
+    columns:
+      - name: autoqa_rating_id
+        description: "Primary key."
+        tests: [unique, not_null]
+      - name: autoqa_review_id
+        description: "FK to autoqa_review."
+      - name: rating_category_id
+        description: "FK to category."
+      - name: reviewee_internal_id
+        description: "FK to user."
+
+  - name: autoqa_root_cause
+    description: "Root causes associated with a specific automated rating."
+    columns:
+      - name: autoqa_rating_id
+        description: "FK to autoqa_rating."
+      - name: category
+        description: "Root cause category."
+      - name: root_cause
+        description: "Root cause description."
+      - name: count
+        description: "Occurrence count."
+    tests:
+      - unique:
+          column_name: "autoqa_rating_id || '-' || category || '-' || root_cause"
+
+  - name: manual_review
+    description: "Manual review performed by a human reviewer."
+    columns:
+      - name: review_id
+        description: "Primary key."
+        tests: [unique, not_null]
+      - name: payment_id
+        description: "FK to payment."
+      - name: payment_token_id
+        description: "FK to payment_token."
+      - name: conversation_external_id
+        description: "FK to conversation."
+      - name: team_id
+        description: "FK to team."
+      - name: reviewer_id
+        description: "FK to user."
+      - name: reviewee_id
+        description: "FK to user."
+      - name: updated_by
+        description: "FK to user."
+
+  - name: manual_rating
+    description: "Category-level score within a manual review."
+    columns:
+      - name: payment_id
+        description: "FK to payment."
+      - name: team_id
+        description: "FK to team."
+      - name: review_id
+        description: "FK to manual_review."
+      - name: category_id
+        description: "FK to category."
+    tests:
+      - unique:
+          column_name: "payment_id || '-' || team_id || '-' || review_id || '-' || category_id"
