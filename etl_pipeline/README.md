@@ -38,5 +38,3 @@ pipeline = SubscriptionETLPipeline(project_id="prod_project")
 ```bash
 python etl_pipeline.py
 ```
-
-### Expected Output
