@@ -10,20 +10,48 @@ class SubscriptionETLPipeline:
         self.project_id = project_id
         self.dataset_id = "subscription_data"
         self.client = bigquery.Client(project=project_id)
+        self.offset_file = "last_offset.json"
         
-    def extract_from_api(self):
+    def get_last_offset(self):  ##c with this we ensure the incremental instead of deleting and re processing everything each time
         """
-        Extract subscription data from API (simulated with etl.json for demo)
+        Get the last processed offset for incremental extraction
+        """
+        try:
+            with open(self.offset_file, "r") as f:
+                data = json.load(f)
+                return data.get("last_offset")
+        except FileNotFoundError:
+            return None
+    
+    def save_offset(self, offset):
+        """
+        Save the current offset for next incremental run
+        """
+        with open(self.offset_file, "w") as f:
+            json.dump({"last_offset": offset, "updated_at": datetime.now().isoformat()}, f)
+    
+    def extract_from_api(self, offset=None):
+        """
+        Extract subscription data from API with pagination support
         """
         print("🔍 Extracting subscription data from API...")
+        
+        # Simulate API call with offset
+        # In production: requests.get(f"https://api.example.com/subscriptions?offset={offset}")
         try:
             with open("etl.json", "r") as f:
                 data = json.load(f)
+            
+            # Get next offset for incremental processing
+            next_offset = data.get("next_offset")
+            
             print(f"✅ Data extracted: {len(data.get('list', []))} subscriptions")
-            return data
+            print(f"�� Next offset: {next_offset}")
+            
+            return data, next_offset
         except FileNotFoundError:
             print("❌ etl.json file not found")
-            return {}
+            return {}, None
     
     def transform_data(self, raw_data):
         """
@@ -68,7 +96,7 @@ class SubscriptionETLPipeline:
         if not subs_df.empty:
             table_id = f"{self.project_id}.{self.dataset_id}.subscriptions"
             job_config = bigquery.LoadJobConfig(
-                write_disposition=bigquery.WriteDisposition.WRITE_APPEND, ##c with this we ensure the incremental instead of deleting and re processing everything each time
+                write_disposition=bigquery.WriteDisposition.WRITE_APPEND,
                 autodetect=True
             )
             job = self.client.load_table_from_dataframe(subs_df, table_id, job_config=job_config)
@@ -88,18 +116,32 @@ class SubscriptionETLPipeline:
     
     def run_pipeline(self):
         """
-        Run the complete ETL pipeline
+        Run the complete ETL pipeline with incremental offset handling
         """
         print("🚀 Starting Subscription ETL pipeline...")
         
-        # Extract
-        raw_data = self.extract_from_api()
+        # Get last processed offset
+        last_offset = self.get_last_offset()
+        if last_offset:
+            print(f"📋 Continuing from offset: {last_offset}")
+        
+        # Extract with offset
+        raw_data, next_offset = self.extract_from_api(last_offset)
+        
+        if not raw_data:
+            print("❌ No data to process")
+            return
         
         # Transform
         subs_df, cust_df = self.transform_data(raw_data)
         
         # Load
         self.load_incremental(subs_df, cust_df)
+        
+        # Save offset for next run
+        if next_offset:
+            self.save_offset(next_offset)
+            print(f"💾 Saved offset for next run: {next_offset}")
         
         print("✅ Pipeline completed successfully!")
 
