@@ -1,0 +1,129 @@
+{
+  "list": [
+    {
+      "subscription": {
+        "id": "16BgA3Tuv7BDyKjJf",
+        "billing_period": 1,
+        "billing_period_unit": "year",
+        "customer_id": "AzqfKITuv6MG4KUoV",
+        "status": "active",
+        "current_term_start": 1699354233,
+        "current_term_end": 1730976633,
+        "next_billing_at": 1730976633,
+        "created_at": 1699354233,
+        "started_at": 1699354233,
+        "activated_at": 1699354233,
+        "created_from_ip": "90",
+        "updated_at": 1699354239,
+        "has_scheduled_changes": false,
+        "channel": "web",
+        "resource_version": 1699354239452,
+        "deleted": false,
+        "object": "subscription",
+        "coupon": "JS",
+        "currency_code": "USD",
+        "subscription_items": [
+          {
+            "item_price_id": "growth-yearly-usd",
+            "item_type": "plan",
+            "quantity": 60,
+            "unit_price": 30000,
+            "amount": 1800000,
+            "free_quantity": 0,
+            "object": "subscription_item"
+          },
+          {
+            "item_price_id": "survey-lite-yearly-usd",
+            "item_type": "addon",
+            "quantity": 1,
+            "unit_price": 0,
+            "amount": 0,
+            "object": "subscription_item"
+          },
+          {
+            "item_price_id": "survey-lite-usage-yearly-usd",
+            "item_type": "addon",
+            "metered_quantity": "0",
+            "unit_price": 0,
+            "object": "subscription_item"
+          }
+        ],
+        "item_tiers": [
+          {
+            "item_price_id": "survey-lite-usage-yearly-usd",
+            "starting_unit": 1,
+            "ending_unit": 9000,
+            "price": 0,
+            "object": "item_tier"
+          },
+          {
+            "item_price_id": "survey-lite-usage-yearly-usd",
+            "starting_unit": 9001,
+            "price": 55,
+            "object": "item_tier"
+          }
+        ],
+        "coupons": [
+          {
+            "coupon_id": "JS",
+            "apply_till": 1730976633,
+            "applied_count": 1,
+            "object": "coupon"
+          }
+        ],
+        "due_invoices_count": 1,
+        "due_since": 1699354233,
+        "total_dues": 1224000,
+        "mrr": 102000,
+        "exchange_rate": 1.071983706,
+        "base_currency_code": "EUR",
+        "has_scheduled_advance_invoices": false,
+        "create_pending_invoices": true,
+        "auto_close_invoices": true
+      },
+      "customer": {
+        "id": "AzqfKITuv6MG4KUoV",
+        "first_name": "I",
+        "last_name": "K",
+        "email": ".com",
+        "company": "J",
+        "auto_collection": "off",
+        "offline_payment_method": "bank_transfer",
+        "net_term_days": 0,
+        "allow_direct_debit": false,
+        "created_at": 1699354037,
+        "created_from_ip": "90",
+        "taxability": "taxable",
+        "updated_at": 1699354037,
+        "pii_cleared": "active",
+        "channel": "web",
+        "resource_version": 1699354037262,
+        "deleted": false,
+        "object": "customer",
+        "billing_address": {
+          "first_name": "I",
+          "last_name": "K",
+          "email": ".com",
+          "company": "J",
+          "line1": "T",
+          "city": "K",
+          "country": "P",
+          "zip": "75",
+          "validation_status": "not_validated",
+          "object": "billing_address"
+        },
+        "card_status": "no_card",
+        "promotional_credits": 0,
+        "refundable_credits": 0,
+        "excess_payments": 0,
+        "unbilled_charges": 0,
+        "preferred_currency_code": "USD",
+        "mrr": 0,
+        "tax_providers_fields": [],
+        "auto_close_invoices": true,
+        "cf_payment_id": 106728
+      }
+    }
+  ],
+  "next_offset": "[\"1698915678000\",\"63969095\"]"
+}
