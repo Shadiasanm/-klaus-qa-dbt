@@ -36,6 +36,7 @@ This repository contains the dbt data model for the Klaus QA exercise, designed 
 ## ETL Pipeline Features
 
 - **Incremental Loading**: Only processes new data without reprocessing existing records.
+- **Offset Handling**: Uses pagination tokens for true incremental processing.
 - **Data Separation**: Automatically separates subscription and customer data into different tables.
 - **Audit Trail**: Adds timestamps and data source information to all records.
 - **BigQuery Integration**: Loads data directly to BigQuery with automatic schema detection.
