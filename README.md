@@ -6,6 +6,7 @@ This repository contains the dbt data model for the Klaus QA exercise, designed 
 
 - `models/`: Contains all dbt models (one per entity/table).
 - `models/schema.yml`: Descriptions and tests for each model.
+- `analysis/solutions.sql`: SQL solutions for the technical tasks required.
 - `dbt_project.yml`: dbt project configuration.
 
 ## How to use
@@ -29,3 +30,4 @@ This repository contains the dbt data model for the Klaus QA exercise, designed 
 - All models are materialized as views.
 - Source tables (e.g., `raw_conversation`) should be replaced with your actual raw data sources.
 - Tests for uniqueness and referential integrity are defined in `schema.yml`.
+- SQL solutions are tested (in BQ) and ready for production use and can be found within the folder `analysis` in fhe file `solutions.sql`.
